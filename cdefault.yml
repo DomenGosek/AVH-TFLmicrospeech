@@ -1,5 +1,5 @@
 default:
-  compiler: GCC
+  compiler: AC6
 
   misc:
     - for-compiler: GCC

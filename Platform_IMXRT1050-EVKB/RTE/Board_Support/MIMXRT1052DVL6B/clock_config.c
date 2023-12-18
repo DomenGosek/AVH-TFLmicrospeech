@@ -15,11 +15,11 @@
 
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Clocks v8.0
+product: Clocks v12.0
 processor: MIMXRT1052xxxxB
 package_id: MIMXRT1052DVL6B
 mcu_data: ksdk2_0
-processor_version: 10.0.0
+processor_version: 14.0.0
 board: IMXRT1050-EVKB
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 
@@ -33,8 +33,6 @@ board: IMXRT1050-EVKB
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-/* System clock frequency. */
-extern uint32_t SystemCoreClock;
 
 /*******************************************************************************
  ************************ BOARD_InitBootClocks function ************************
@@ -53,13 +51,14 @@ name: BOARD_BootClockRUN
 called_from_default_init: true
 outputs:
 - {id: AHB_CLK_ROOT.outFreq, value: 600 MHz}
-- {id: CAN_CLK_ROOT.outFreq, value: 40 MHz}
+- {id: CAN_CLK_ROOT.outFreq, value: 20 MHz}
 - {id: CKIL_SYNC_CLK_ROOT.outFreq, value: 32.768 kHz}
 - {id: CLK_1M.outFreq, value: 1 MHz}
 - {id: CLK_24M.outFreq, value: 24 MHz}
 - {id: CSI_CLK_ROOT.outFreq, value: 12 MHz}
 - {id: ENET_125M_CLK.outFreq, value: 50 MHz}
 - {id: ENET_25M_REF_CLK.outFreq, value: 25 MHz}
+- {id: ENET_REF_CLK.outFreq, value: 50 MHz}
 - {id: FLEXIO1_CLK_ROOT.outFreq, value: 30 MHz}
 - {id: FLEXIO2_CLK_ROOT.outFreq, value: 30 MHz}
 - {id: FLEXSPI_CLK_ROOT.outFreq, value: 1440/11 MHz}
@@ -70,18 +69,18 @@ outputs:
 - {id: LPI2C_CLK_ROOT.outFreq, value: 60 MHz}
 - {id: LPSPI_CLK_ROOT.outFreq, value: 105.6 MHz}
 - {id: LVDS1_CLK.outFreq, value: 1.2 GHz}
-- {id: MQS_MCLK.outFreq, value: 1080/17 MHz}
+- {id: MQS_MCLK.outFreq, value: 1080/29 MHz}
 - {id: PERCLK_CLK_ROOT.outFreq, value: 75 MHz}
 - {id: PLL7_MAIN_CLK.outFreq, value: 24 MHz}
 - {id: SAI1_CLK_ROOT.outFreq, value: 12.28875 MHz}
 - {id: SAI1_MCLK1.outFreq, value: 12.28875 MHz}
 - {id: SAI1_MCLK2.outFreq, value: 12.28875 MHz}
 - {id: SAI1_MCLK3.outFreq, value: 30 MHz}
-- {id: SAI2_CLK_ROOT.outFreq, value: 960/119 MHz}
-- {id: SAI2_MCLK1.outFreq, value: 960/119 MHz}
+- {id: SAI2_CLK_ROOT.outFreq, value: 960/203 MHz}
+- {id: SAI2_MCLK1.outFreq, value: 960/203 MHz}
 - {id: SAI2_MCLK3.outFreq, value: 30 MHz}
-- {id: SAI3_CLK_ROOT.outFreq, value: 1080/17 MHz}
-- {id: SAI3_MCLK1.outFreq, value: 1080/17 MHz}
+- {id: SAI3_CLK_ROOT.outFreq, value: 1080/29 MHz}
+- {id: SAI3_MCLK1.outFreq, value: 1080/29 MHz}
 - {id: SAI3_MCLK3.outFreq, value: 30 MHz}
 - {id: SEMC_CLK_ROOT.outFreq, value: 75 MHz}
 - {id: SPDIF0_CLK_ROOT.outFreq, value: 30 MHz}
@@ -92,6 +91,7 @@ outputs:
 settings:
 - {id: CCM.AHB_PODF.scale, value: '1', locked: true}
 - {id: CCM.ARM_PODF.scale, value: '2', locked: true}
+- {id: CCM.CAN_CLK_PODF.scale, value: '4'}
 - {id: CCM.FLEXSPI_PODF.scale, value: '2', locked: true}
 - {id: CCM.FLEXSPI_SEL.sel, value: CCM_ANALOG.PLL3_PFD0_CLK}
 - {id: CCM.LCDIF_PODF.scale, value: '4', locked: true}
@@ -99,13 +99,14 @@ settings:
 - {id: CCM.LCDIF_PRE_CLK_SEL.sel, value: CCM_ANALOG.PLL3_PFD3_CLK}
 - {id: CCM.LPSPI_PODF.scale, value: '5', locked: true}
 - {id: CCM.PERCLK_PODF.scale, value: '2', locked: true}
-- {id: CCM.SAI1_CLK_PODF.scale, value: '64', locked: true}
+- {id: CCM.SAI1_CLK_PODF.scale, value: '16'}
 - {id: CCM.SAI1_CLK_PRED.scale, value: '1', locked: true}
 - {id: CCM.SAI1_CLK_SEL.sel, value: CCM_ANALOG.PLL4_MAIN_CLK}
-- {id: CCM.SAI2_CLK_PODF.scale, value: '63', locked: true}
+- {id: CCM.SAI2_CLK_PODF.scale, value: '63'}
 - {id: CCM.SAI2_CLK_PRED.scale, value: '1', locked: true}
 - {id: CCM.SEMC_PODF.scale, value: '8', locked: true}
 - {id: CCM.TRACE_PODF.scale, value: '3', locked: true}
+- {id: CCM_ANALOG.AUDIO_DIV.scale, value: '4'}
 - {id: CCM_ANALOG.PLL1_BYPASS.sel, value: CCM_ANALOG.PLL1}
 - {id: CCM_ANALOG.PLL1_PREDIV.scale, value: '1', locked: true}
 - {id: CCM_ANALOG.PLL1_VDIV.scale, value: '50', locked: true}
@@ -124,6 +125,7 @@ settings:
 - {id: CCM_ANALOG.PLL3_PFD1_BYPASS.sel, value: CCM_ANALOG.PLL3_PFD1}
 - {id: CCM_ANALOG.PLL3_PFD1_DIV.scale, value: '27'}
 - {id: CCM_ANALOG.PLL3_PFD2_BYPASS.sel, value: CCM_ANALOG.PLL3_PFD2}
+- {id: CCM_ANALOG.PLL3_PFD2_DIV.scale, value: '29'}
 - {id: CCM_ANALOG.PLL3_PFD3_BYPASS.sel, value: CCM_ANALOG.PLL3_PFD3}
 - {id: CCM_ANALOG.PLL4.denom, value: '100', locked: true}
 - {id: CCM_ANALOG.PLL4.div, value: '32', locked: true}
@@ -136,6 +138,7 @@ settings:
 - {id: CCM_ANALOG.PLL6_BYPASS.sel, value: CCM_ANALOG.PLL6}
 - {id: CCM_ANALOG_PLL_AUDIO_POWERDOWN_CFG, value: 'No'}
 - {id: CCM_ANALOG_PLL_USB1_POWER_CFG, value: 'Yes'}
+- {id: IOMUXC_GPR.ENET_REF_CLK_SEL.sel, value: CCM_ANALOG.ENET_125M_CLK}
 sources:
 - {id: XTALOSC24M.RTC_OSC.outFreq, value: 32.768 kHz, enabled: true}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
@@ -163,7 +166,7 @@ const clock_usb_pll_config_t usb1PllConfig_BOARD_BootClockRUN =
 const clock_audio_pll_config_t audioPllConfig_BOARD_BootClockRUN =
     {
         .loopDivider = 32,                        /* PLL loop divider, Fout = Fin * ( loopDivider + numerator / denominator ) */
-        .postDivider = 1,                         /* Divider after PLL */
+        .postDivider = 4,                         /* Divider after PLL */
         .numerator = 77,                          /* 30 bit numerator of fractional loop divider, Fout = Fin * ( loopDivider + numerator / denominator ) */
         .denominator = 100,                       /* 30 bit denominator of fractional loop divider, Fout = Fin * ( loopDivider + numerator / denominator ) */
         .src = 0,                                 /* Bypass clock source, 0 - OSC 24M, 1 - CLK1_P and CLK1_N */
@@ -289,7 +292,7 @@ void BOARD_BootClockRUN(void)
     /* Set SAI1_CLK_PRED. */
     CLOCK_SetDiv(kCLOCK_Sai1PreDiv, 0);
     /* Set SAI1_CLK_PODF. */
-    CLOCK_SetDiv(kCLOCK_Sai1Div, 63);
+    CLOCK_SetDiv(kCLOCK_Sai1Div, 15);
     /* Set Sai1 clock source. */
     CLOCK_SetMux(kCLOCK_Sai1Mux, 2);
     /* Disable SAI2 clock gate. */
@@ -322,7 +325,7 @@ void BOARD_BootClockRUN(void)
     CLOCK_DisableClock(kCLOCK_Can1S);
     CLOCK_DisableClock(kCLOCK_Can2S);
     /* Set CAN_CLK_PODF. */
-    CLOCK_SetDiv(kCLOCK_CanDiv, 1);
+    CLOCK_SetDiv(kCLOCK_CanDiv, 3);
     /* Set Can clock source. */
     CLOCK_SetMux(kCLOCK_CanMux, 2);
     /* Disable UART clock gate. */
@@ -391,8 +394,6 @@ void BOARD_BootClockRUN(void)
     CLOCK_InitSysPfd(kCLOCK_Pfd2, 29);
     /* Init System pfd3. */
     CLOCK_InitSysPfd(kCLOCK_Pfd3, 16);
-    /* Disable pfd offset. */
-    CCM_ANALOG->PLL_SYS &= ~CCM_ANALOG_PLL_SYS_PFD_OFFSET_EN_MASK;
 #endif
     /* In SDK projects, external flash (configured by FLEXSPI) will be initialized by dcd.
      * With this macro XIP_EXTERNAL_FLASH, usb1 pll (selected to be FLEXSPI clock source in SDK projects) will be left unchanged.
@@ -405,7 +406,7 @@ void BOARD_BootClockRUN(void)
     /* Init Usb1 pfd1. */
     CLOCK_InitUsb1Pfd(kCLOCK_Pfd1, 27);
     /* Init Usb1 pfd2. */
-    CLOCK_InitUsb1Pfd(kCLOCK_Pfd2, 17);
+    CLOCK_InitUsb1Pfd(kCLOCK_Pfd2, 29);
     /* Init Usb1 pfd3. */
     CLOCK_InitUsb1Pfd(kCLOCK_Pfd3, 19);
     /* Disable Usb1 PLL output for USBPHY1. */
@@ -423,14 +424,12 @@ void BOARD_BootClockRUN(void)
     pllAudio = (CCM_ANALOG->PLL_AUDIO & (~(CCM_ANALOG_PLL_AUDIO_DIV_SELECT_MASK | CCM_ANALOG_PLL_AUDIO_POWERDOWN_MASK))) |
                CCM_ANALOG_PLL_AUDIO_ENABLE_MASK | CCM_ANALOG_PLL_AUDIO_DIV_SELECT(32);
     pllAudio |= CCM_ANALOG_PLL_AUDIO_POST_DIV_SELECT(2);
-    CCM_ANALOG->MISC2 &= ~CCM_ANALOG_MISC2_AUDIO_DIV_LSB_MASK;
-    CCM_ANALOG->MISC2 &= ~CCM_ANALOG_MISC2_AUDIO_DIV_MSB_MASK;
+    CCM_ANALOG->MISC2 |= CCM_ANALOG_MISC2_AUDIO_DIV_LSB_MASK;
+    CCM_ANALOG->MISC2 |= CCM_ANALOG_MISC2_AUDIO_DIV_MSB_MASK;
     CCM_ANALOG->PLL_AUDIO = pllAudio;
     while ((CCM_ANALOG->PLL_AUDIO & CCM_ANALOG_PLL_AUDIO_LOCK_MASK) == 0)
     {
     }
-    /* Disable pfd offset. */
-    CCM_ANALOG->PLL_AUDIO &= ~CCM_ANALOG_PLL_AUDIO_PFD_OFFSET_EN_MASK;
     /* Disable bypass for Audio PLL. */
     CLOCK_SetPllBypass(CCM_ANALOG, kCLOCK_PllAudio, 0);
     /* DeInit Video PLL. */
@@ -443,8 +442,6 @@ void BOARD_BootClockRUN(void)
     CCM_ANALOG->PLL_VIDEO |= CCM_ANALOG_PLL_VIDEO_ENABLE_MASK;
     /* Init Enet PLL. */
     CLOCK_InitEnetPll(&enetPllConfig_BOARD_BootClockRUN);
-    /* Disable pfd offset. */
-    CCM_ANALOG->PLL_ENET &= ~CCM_ANALOG_PLL_ENET_PFD_OFFSET_EN_MASK;
     /* DeInit Usb2 PLL. */
     CLOCK_DeinitUsb2Pll();
     /* Bypass Usb2 PLL. */
@@ -488,7 +485,14 @@ void BOARD_BootClockRUN(void)
     /* Set MQS configuration. */
     IOMUXC_MQSConfig(IOMUXC_GPR,kIOMUXC_MqsPwmOverSampleRate32, 0);
     /* Set ENET Ref clock source. */
-    IOMUXC_GPR->GPR1 &= ~IOMUXC_GPR_GPR1_ENET1_TX_CLK_DIR_MASK;
+#if defined(IOMUXC_GPR_GPR1_ENET_REF_CLK_DIR_MASK)
+    IOMUXC_GPR->GPR1 |= IOMUXC_GPR_GPR1_ENET_REF_CLK_DIR_MASK;
+#elif defined(IOMUXC_GPR_GPR1_ENET1_TX_CLK_DIR_MASK)
+    /* Backward compatibility for original bitfield name */
+    IOMUXC_GPR->GPR1 |= IOMUXC_GPR_GPR1_ENET1_TX_CLK_DIR_MASK;
+#else
+#error "Neither IOMUXC_GPR_GPR1_ENET_REF_CLK_DIR_MASK nor IOMUXC_GPR_GPR1_ENET1_TX_CLK_DIR_MASK is defined."
+#endif /* defined(IOMUXC_GPR_GPR1_ENET_REF_CLK_DIR_MASK) */
     /* Set GPT1 High frequency reference clock source. */
     IOMUXC_GPR->GPR5 &= ~IOMUXC_GPR_GPR5_VREF_1M_CLK_GPT1_MASK;
     /* Set GPT2 High frequency reference clock source. */

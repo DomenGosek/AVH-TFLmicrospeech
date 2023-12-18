@@ -1,30 +1,28 @@
 project:
 
   define:
-    - __EVENT_DRIVEN 
+    - __EVENT_DRIVEN
     - CODEC_WM8960_ENABLE
     - SKIP_SYSCLK_INIT
-    - XIP_EXTERNAL_FLASH=1
-    - XIP_BOOT_HEADER_ENABLE=1
-    - XIP_BOOT_HEADER_DCD_ENABLE=1
+    - XIP_EXTERNAL_FLASH: 1
+    - XIP_BOOT_HEADER_ENABLE: 1
+    - XIP_BOOT_HEADER_DCD_ENABLE: 1
     
-  add-paths:
+  add-path:
     - .
     - ../VSI/audio/include
     - ../micro_speech/src
 
   packs:
-  - pack: tensorflow::kissfft@1.22.5-rc4
-  - pack: Keil::iMXRT1064_MWP@1.4.0
-  - pack: ARM::CMSIS@5.9.0
-  - pack: Keil::ARM_Compiler@1.7.2
-  - pack: tensorflow::gemmlowp@1.22.5-rc4
-  - pack: NXP::EVK-MIMXRT1064_BSP@13.0.0
-  - pack: NXP::MIMXRT1064_DFP@13.0.0
+  - pack: Keil::MIMXRT1064-EVK_BSP
+  - pack: Keil::iMXRT1064_MWP
   - pack: ARM::CMSIS-Driver@2.7.2
+  - pack: NXP::EVK-MIMXRT1064_BSP@17.0.0
+  - pack: NXP::MIMXRT1064_DFP@17.0.0
+  - pack: tensorflow::kissfft@1.22.5-rc4
+  - pack: tensorflow::gemmlowp@1.22.5-rc4
   - pack: tensorflow::tensorflow-lite-micro@1.22.5-rc4
   - pack: tensorflow::flatbuffers@1.22.5-rc4
-  - pack: Keil::MIMXRT1064-EVK_BSP@1.2.1
   - pack: tensorflow::ruy@1.22.5-rc4
 
   components:
@@ -32,14 +30,17 @@ project:
   - component: ARM::CMSIS:DSP
   - component: ARM::CMSIS:NN Lib
   - component: ARM::CMSIS:RTOS2:Keil RTX5
-  - component: Compiler:Event Recorder&DAP
-  - component: Compiler:I/O:STDERR&User
-  - component: Compiler:I/O:STDIN&User
-  - component: Compiler:I/O:STDOUT&User
+  - component: ARM::CMSIS:OS Tick:SysTick
+  - component: ARM::CMSIS-Compiler:CORE
+  - component: ARM::CMSIS-Compiler:STDERR:Custom   
+  - component: ARM::CMSIS-Compiler:STDIN:Custom
+  - component: ARM::CMSIS-Compiler:STDOUT:Custom
+  - component: ARM::CMSIS-View:Event Recorder&DAP
   - component: Keil::CMSIS Driver:Ethernet MAC
   - component: Keil::CMSIS Driver:Ethernet PHY:KSZ8081RNA
   - component: Keil::CMSIS Driver:MCI
-  - component: Keil::CMSIS Driver:VIO:Board
+  - component: Keil::CMSIS Driver:VIO:Board&MIMXRT1064-EVK
+  - component: NXP::Board Support:SDK Drivers:evkmimxrt1064 xip
   - component: NXP::Board Support:SDK Project Template:project_template&evkmimxrt1064
   - component: NXP::CMSIS Driver:USART:lpuart_cmsis
   - component: NXP::Device:CMSIS:MIMXRT1064_header
@@ -47,8 +48,12 @@ project:
   - component: NXP::Device:SDK Drivers:clock
   - component: NXP::Device:SDK Drivers:codec
   - component: NXP::Device:SDK Drivers:codec_i2c
-  - component: NXP::Device:SDK Drivers:codec_wm8960_adapter
+  - component: NXP::Device:SDK Drivers:wm8960
+  - component: NXP::Device:SDK Drivers:wm8960_adapter
   - component: NXP::Device:SDK Drivers:common
+    misc:
+      - C:
+          - -include cmsis_core5.h
   - component: NXP::Device:SDK Drivers:dmamux
   - component: NXP::Device:SDK Drivers:edma
   - component: NXP::Device:SDK Drivers:enet
@@ -60,17 +65,17 @@ project:
   - component: NXP::Device:SDK Drivers:lpuart
   - component: NXP::Device:SDK Drivers:lpuart_adapter
   - component: NXP::Device:SDK Drivers:lpuart_edma
+  - component: NXP::Device:SDK Drivers:nic301
+  - component: NXP::Device:SDK Utilities:assert
   - component: NXP::Device:SDK Drivers:sai
   - component: NXP::Device:SDK Drivers:sai_edma
   - component: NXP::Device:SDK Drivers:sdhc
-  - component: NXP::Device:SDK Drivers:wm8960
-  - component: NXP::Device:SDK Drivers:xip_board
   - component: NXP::Device:SDK Drivers:xip_device
   - component: NXP::Device:SDK Project Template:RTE_Device
   - component: NXP::Device:SDK Utilities:debug_console
   - component: NXP::Device:SDK Utilities:serial_manager
   - component: NXP::Device:SDK Utilities:serial_manager_uart
-  - component: NXP::Device:Startup:MIMXRT1064_startup
+  - component: NXP::Device:Startup
   - component: tensorflow::Data Exchange:Serialization:flatbuffers
   - component: tensorflow::Data Processing:Math:gemmlowp fixed-point
   - component: tensorflow::Data Processing:Math:kissfft

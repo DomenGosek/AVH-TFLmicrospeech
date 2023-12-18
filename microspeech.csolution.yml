@@ -1,9 +1,15 @@
 solution:
-  compiler: AC6                               # currently required for components Compiler:I/O
+  created-for: CMSIS-Toolbox@2.1.0
+  cdefault:
 
 # it is recommended to list the pack or packs that define the device or board used in the csolution.yml file
   packs:
-    - pack: ARM::CMSIS
+    - pack: ARM::CMSIS@>=6.0.0
+    - pack: ARM::CMSIS-View
+    - pack: ARM::CMSIS-Compiler
+    - pack: ARM::CMSIS-NN
+    - pack: ARM::CMSIS-DSP
+    - pack: ARM::CMSIS-RTX
 
   target-types:
     - type: MIMXRT1064                               # runs on NXP i.MX RT1064 EVK
