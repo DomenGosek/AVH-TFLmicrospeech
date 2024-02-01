@@ -7,9 +7,10 @@ solution:
     - pack: ARM::CMSIS@>=6.0.0
     - pack: ARM::CMSIS-View
     - pack: ARM::CMSIS-Compiler
-    - pack: ARM::CMSIS-NN
+    - pack: ARM::CMSIS-NN@4.1.0
     - pack: ARM::CMSIS-DSP
     - pack: ARM::CMSIS-RTX
+    - pack: ARM::CMSIS-Driver
 
   target-types:
     - type: MIMXRT1064                               # runs on NXP i.MX RT1064 EVK

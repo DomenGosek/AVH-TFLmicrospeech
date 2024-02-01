@@ -12,19 +12,32 @@ default:
     - for-compiler: AC6
       C-CPP:
         - -ffunction-sections
+        - -Wno-packed
         - -Wno-macro-redefined
+        - -Wno-missing-variable-declarations
+        - -Wno-missing-prototypes
+        - -Wno-missing-noreturn
+        - -Wno-sign-conversion
+        - -Wno-nonportable-include-path
+        - -Wno-reserved-id-macro
+        - -Wno-unused-macros
+        - -Wno-documentation-unknown-command
+        - -Wno-documentation
+        - -Wno-license-management
         - -Wno-pragma-pack
         - -Wno-parentheses-equality
         - -funsigned-char 
-        - -fshort-enums 
-        - -fshort-wchar
         - -fno-rtti
       C:
-        - -std=gnu11
+        - -std=c99
+      CPP:
+        - -xc++
+        - -std=c++11
       ASM:
         - -masm=auto
       Link:
-        - --entry=Reset_Handler
+        - --diag_suppress=6314,6329,6439
+        # - --entry=Reset_Handler
         - --info summarysizes
         - --map
 
